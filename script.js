@@ -1,3 +1,5 @@
+/*jslint browser */
+/*global window */
 const messages = ["TIM ", "ARIA ", "CONNOR ", "JANE  ", "MICELI  "];
 
 var pinkrain = 0;
@@ -14,43 +16,13 @@ var M = {
     HEIGHT: window.innerHeight,
     WIDTH: window.innerWidth,
     animation: null,
-    c: null,
-    canvii: [],
-    codes: [],
-    codesCounter: 0,
-    createCodeLoop: null,
-    ctx: null,
-    ctx2: null,
     assignColumn: function() {
         "use strict";
         var randomColumn = M.randomFromInterval(0, (M.COLUMNS - 1));
         return randomColumn;
     },
-    createCode: function() {
-        "use strict";
-        clearTimeout(M.createCodeLoop);
-        var randomInterval = M.randomFromInterval(0, 100);
-        var column = M.assignColumn();
-        var codeLength = 0;
-        var i = 0;
-        var reverseString = "";
-        var codeVelocity = (Math.random() * (M.settings.VELOCITY_PARAMS.max - M.settings.VELOCITY_PARAMS.min)) + M.settings.VELOCITY_PARAMS.min;
-        var lettersLength = M.letters.length;
-        var newLetter = 0;
-        if (column) {
-            codeLength = M.randomFromInterval(M.settings.CODE_LENGTH_PARAMS.min, M.settings.CODE_LENGTH_PARAMS.max);
-            M.codes[column][0].position = {
-                "x": (column * M.settings.COL_WIDTH),
-                "y": 0
-            };
-            M.codes[column][0].velocity = codeVelocity;
-            M.codes[column][0].strength = M.codes[column][0].velocity / M.settings.VELOCITY_PARAMS.max;
-            M.checkArray(codeLength, messages, column, lettersLength);
-            M.createCanvii(column);
-            M.codesCounter += 1;
-        }
-        M.createCodeLoop = setTimeout(M.createCode, randomInterval);
-    },
+    c: null,
+    canvii: [],
     checkArray: function(codeLength, messages, column, lettersLength) {
         "use strict";
         var messageLengths = [];
@@ -64,7 +36,9 @@ var M = {
                 M.randomMessage(codeLength, column, lettersLength, messageLengths);
             }
         });
-    },    
+    },
+    codes: [],
+    codesCounter: 0,
     createCanvii: function(i) {
         "use strict";
         var j;
@@ -116,6 +90,32 @@ var M = {
         }
         M.codes[i][0].canvas = newCanv;
     },
+    createCode: function() {
+        "use strict";
+        var randomInterval = M.randomFromInterval(0, 100);
+        var column = M.assignColumn();
+        var codeLength = 0;
+        var i = 0;
+        var reverseString = "";
+        var codeVelocity = (Math.random() * (M.settings.VELOCITY_PARAMS.max - M.settings.VELOCITY_PARAMS.min)) + M.settings.VELOCITY_PARAMS.min;
+        var lettersLength = M.letters.length;
+        var newLetter = 0;
+        clearTimeout(M.createCodeLoop);
+        if (column) {
+            codeLength = M.randomFromInterval(M.settings.CODE_LENGTH_PARAMS.min, M.settings.CODE_LENGTH_PARAMS.max);
+            M.codes[column][0].position = {
+                "x": (column * M.settings.COL_WIDTH),
+                "y": 0
+            };
+            M.codes[column][0].velocity = codeVelocity;
+            M.codes[column][0].strength = M.codes[column][0].velocity / M.settings.VELOCITY_PARAMS.max;
+            M.checkArray(codeLength, messages, column, lettersLength);
+            M.createCanvii(column);
+            M.codesCounter += 1;
+        }
+        M.createCodeLoop = setTimeout(M.createCode, randomInterval);
+    },
+    createCodeLoop: null,
     createLines: function() {
         "use strict";
         var linesYBlack = 0;
@@ -146,8 +146,10 @@ var M = {
         }
         M.ctx2.stroke();
     },
+    ctx: null,
+    ctx2: null,
     draw: function() {
-        "use strict";
+   "use strict";
         var velocity;
         var height;
         var x;
