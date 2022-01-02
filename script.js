@@ -191,8 +191,8 @@ var M = {
     init: function() {
         "use strict";
         var i = 0;
-        if (typeof(G_vmlCanvasManager) !== "undefined") {
-            M.c = G_vmlCanvasManager.initElement("canvas");
+        if (typeof window.G_vmlCanvasManager !== "undefined") {
+            M.c = window.G_vmlCanvasManager.initElement("canvas");
         } else {
             M.c = document.getElementById("canvas");
         }

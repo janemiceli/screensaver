@@ -1,7 +1,12 @@
 Matrix code rain
 ================
 
-**See live demo [here](https://janemiceli.github.io/matrix/)**
+<p align="center">
+<img src="https://github.com/janemiceli/screensaver/blob/gh-pages/media/matrix.gif">
+</p>
+
+
+**See live demo [here](https://janemiceli.github.io/screensaver/)**
 
 *Matrix* font is from [here](http://www.dafont.com/matrix-code-nfi.font).
 
@@ -9,14 +14,14 @@ TO DO
 - In customer messages, only one string per character length is allowed for some reason
 
 CONFIGURATION 
-- Change color of the rain in script.js, by assigning variable "colorrain" a number that corresonds with the color:
+- Change color of the rain in script.js, by assigning variable "colorrain" a number that corresponds with the color:
 ```
 bluerain = 207;
 var colorrain = bluerain;
 ```
 Live examples:
  * [Pink](https://janemiceli.github.io/Happy_birthday_aria/)
- * [Orange](https://janemiceli.github.io/Happy_birthday_aria/)
+ * [Orange](https://janemiceli.github.io/susanbauter/)
  * [Yellow](https://janemiceli.github.io/Happy_birthday_connor/)
  * [Green](https://janemiceli.github.io/matrix_tim/)
  * [Blue](https://janemiceli.github.io/matrix)
