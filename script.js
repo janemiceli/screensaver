@@ -1,6 +1,6 @@
 /*jslint browser */
 /*global window */
-const messages = ["TIM ", "ARIA ", "CONNOR ", "JANE  ", "MICELI  "];
+const messages = ["TIM", "ARIA", "CONNOR", "JANE", "MICELI"];
 
 var pinkrain = 0;
 var orangerain = 25;
@@ -25,17 +25,12 @@ var M = {
     canvii: [],
     checkArray: function(codeLength, messages, column, lettersLength) {
         "use strict";
-        var messageLengths = [];
-        messages.forEach((message) => {
-            messageLengths.push(message.length);
-        });
-        messages.forEach((item) => {
-            if (item.length == codeLength - 1) {
+        var item = messages[Math.floor(Math.random()*(messages.length))];
+        if (item.length == codeLength - 1) {
                 M.insertCustomMessages(codeLength, item, column);
             } else {
-                M.randomMessage(codeLength, column, lettersLength, messageLengths);
-            }
-        });
+                M.randomMessage(codeLength, column, lettersLength);
+        }
     },
     codes: [],
     codesCounter: 0,
@@ -73,7 +68,7 @@ var M = {
                 newCtx.fillText(text, 0, (canvHeight - (j * M.settings.COL_HEIGHT)));
             }
         } else {
-            for (j = codeLen; j > 1; j -= 1) {
+            for (j = codeLen; j > 0; j -= 1) {
                 text = M.codes[i][j];
                 if (j < (codeLen - 3)) {
                     newCtx.shadowColor = "hsla(" + colorrain + ", 79%, 72%)";
@@ -166,20 +161,21 @@ var M = {
                 velocity = M.codes[i][0].velocity;
                 height = M.codes[i][0].canvas.height;
                 x = M.codes[i][0].position.x;
+                y = M.codes[i][0].position.y;
                 c = M.codes[i][0].canvas;
                 ctx = c.getContext("2d");
-                if (i % 2 === 0) {
-                    y = M.codes[i][0].position.y + height;
+                if (i % 2 === 0) { //rain that goes from the bottom of the screen up
+                    y = y + height;
                     M.ctx.drawImage(c, x, y, M.settings.COL_WIDTH, height);
                     if ((M.codes[i][0].position.y + height) < M.HEIGHT) {
                         M.codes[i][0].position.y -= velocity;
                     } else {
-                        M.codes[i][0].position.y = height;
+                        M.codes[i][0].position.y = M.HEIGHT;
                     }
-                } else {
-                    y = M.codes[i][0].position.y - height;
+                } else { //rain that goes from top to bottom
+                    y = y - height;
                     M.ctx.drawImage(c, x, y, M.settings.COL_WIDTH, height);
-                    if ((M.codes[i][0].position.y - height) < M.HEIGHT) {
+                    if (y < M.HEIGHT) {
                         M.codes[i][0].position.y += velocity;
                     } else {
                         M.codes[i][0].position.y = 0;
@@ -251,21 +247,18 @@ var M = {
         "use strict";
         return Math.floor(Math.random() * (to - from + 1) + from);
     },
-    randomMessage: function(codeLength, column, lettersLength, messageLengths) {
+    randomMessage: function(codeLength, column, lettersLength) {
         "use strict";
         var i = 0;
         var newLetter;
-        if (messageLengths.includes(codeLength - 1)) {
-            return;
-        }
-        for (i = 1; i <= codeLength; i = i + 1) {
+        for (i = 1; i <= codeLength; i += 1) {
             newLetter = M.randomFromInterval(0, (lettersLength - 1));
             M.codes[column][i] = M.letters[newLetter];
         }
     },
     settings: {
         CODE_LENGTH_PARAMS: {
-            max: 20,
+            max: 8,
             min: 3
         },
         COL_HEIGHT: 25,
