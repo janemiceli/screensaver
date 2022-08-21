@@ -259,7 +259,7 @@ var M = {
     settings: {
         CODE_LENGTH_PARAMS: {
             max: 30,
-            min: 10
+            min: 3
         },
         COL_HEIGHT: 25,
         COL_WIDTH: 20,
