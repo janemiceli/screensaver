@@ -258,8 +258,8 @@ var M = {
     },
     settings: {
         CODE_LENGTH_PARAMS: {
-            max: 8,
-            min: 3
+            max: 30,
+            min: 10
         },
         COL_HEIGHT: 25,
         COL_WIDTH: 20,
